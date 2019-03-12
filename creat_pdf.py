@@ -26,7 +26,7 @@ show = [button_author, button_title, button_date, button_text, button_others]
     需要出现在报表中的数据，字典形式储存
 '''
 data = [
-    {
+    { 
         'Author': 'Staraptor',
         'title': 'Good Good Study',
         'published_date': '2017',
