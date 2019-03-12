@@ -155,7 +155,7 @@ def GenerateSupport():
 '''
 def Run_Creat_Report():
     creat_word()
-    creat_report()
+    creat_report() 
 
 if __name__ == "__main__":
     Run_Creat_Report()
