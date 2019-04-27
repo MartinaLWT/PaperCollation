@@ -7,18 +7,42 @@
 
 </head>
 <body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+
+<script type="text/javascript">
+
+//接收一个值
+function oneValues(){
+var result;
+var url=window.location.search; //获取url中"?"符后的字串
+if(url.indexOf("?")!=-1){
+result = url.substr(url.indexOf("=")+1);
+}
+return result;
+}
+        function toPage1(){
+                       var input_val = oneValues();
+                       window.location.href = encodeURI("case_1.html?value=" + input_val);
+        }
+        function toPage2(){
+                       var input_val = oneValues();
+                       window.location.href = encodeURI("case_2.html?value=" + input_val);
+        }
+                function toPage3(){
+                       var input_val = oneValues();
+                       window.location.href = encodeURI("case_3.html?value=" + input_val);
+        }
+    </script>
   <div class="menu">  <!-- class选择器 -->
     <div class="nav">
         <ul>    <!-- ul标签 -->
             <li><a href="demo.html">首页</a></li>
-            <li><a href="case_1.html" >功能一</a></li>  <!-- li标签 -->
-            <li><a href="case_2.html">功能二</a></li>
-            <li><a href="case_3.html">功能三</a></li>
+            <li><a onclick="toPage1()" >论文详细</a></li>  <!-- li标签 -->
+            <li><a onclick="toPage2()">论文统计</a></li>
+            <li><a onclick="toPage3()">相关推荐</a></li>
         </ul>
     </div>
   </div>
-  <input type="text" name="ip" id="text1"></p>
-<button onclick="Search()">检索</button>
   <div style="white-space: pre-line;margin-top: 100px;width:900px; height:600px;overflow: scroll;margin-left:auto;margin-right:auto;" id="div1">
 </div>
   <input type="checkbox" name="checkbox" value="Car" onclick="isSelectAll()">作者
@@ -38,7 +62,7 @@
             type:'get',
             url: SEARCH_URL,
             data:{
-              search_context: $("#text1").val(),
+              search_context: oneValues(),
             },
             dataType:'JSON',
             success:function (data) {
