@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="style_top.css"/> <!-- 调用css -->
+    <title>功能一</title>
+
+</head>
+<body>
+  <div class="menu">  <!-- class选择器 -->
+    <div class="nav">
+        <ul>    <!-- ul标签 -->
+            <li><a href="demo.html">首页</a></li>
+            <li><a href="case_1.html" >功能一</a></li>  <!-- li标签 -->
+            <li><a href="case_2.html">功能二</a></li>
+            <li><a href="case_3.html">功能三</a></li>
+        </ul>
+    </div>
+  </div>
+  <input type="text" name="ip" id="text1"></p>
+<button onclick="Search()">检索</button>
+  <div style="white-space: pre-line;margin-top: 100px;width:900px; height:600px;overflow: scroll;margin-left:auto;margin-right:auto;" id="div1">
+</div>
+  <input type="checkbox" name="checkbox" value="Car" onclick="isSelectAll()">作者
+	<input type="checkbox" name="checkbox" value="Car" onclick="isSelectAll()">题目
+	<input type="checkbox" name="checkbox" value="Car" onclick="isSelectAll()">出版时间
+	<input type="checkbox" name="checkbox" value="Car" onclick="isSelectAll()">出版物
+	<input type="checkbox" name="checkbox" value="Car" onclick="isSelectAll()">出版物检索详细
+	<input type="checkbox" name="checkbox" value="Car" onclick="isSelectAll()">XX
+	<input type="checkbox" name="" value="all" id="all" onclick="selectAll()">全选 <br>
+<p><button onclick="Search()">生成pdf</button></p>
+  <script type="text/javascript" src="../static/jquery-3.3.1.js"></script>
+  <script >
+    var SEARCH_URL = '/api/v0/assistant';
+    function Search() {
+        $("#div1").empty();
+        $.ajax({
+            type:'get',
+            url: SEARCH_URL,
+            data:{
+              search_context: $("#text1").val(),
+            },
+            dataType:'JSON',
+            success:function (data) {
+                displayEachData(data);
+            },
+            error:function () {
+                $("#div1").append("<b>message not found</b>");
+            }
+        })
+    }
+    function displayEachData(data) {
+            $.each(data["data"], function (i, field) {
+                $("#div1").append(JSON.stringify(field)+"<br><br>");
+        });
+    }
+</script>
+    <div class="footer" style="color: #FFFFFF;">制作人：***,***,***,***,*** <div>如有疑问请联系：*************</div></div>
+</body>
+</html>

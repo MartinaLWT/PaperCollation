@@ -1,0 +1,37 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <link rel="stylesheet" type="text/css" href="style.css"/> <!-- 调用css -->
+    <meta charset="UTF-8">
+    <title>论文助手</title>
+</head>
+<body>
+  <div class="menu">  <!-- class选择器 -->
+    <div class="nav">
+        <ul>    <!-- ul标签 -->
+            <li><a href="#">论文助手欢迎您</a></li>  <!-- li标签 -->
+        </ul>
+    </div>
+  </div>
+<div class="top" style=" text-align:center;" ><br>
+        <div id="some"> <input  type="text" style="width:750px;height:40px;margin: 150px" name="search_text" id="search_text"  maxlength="200" placeholder="请输入想要查找的论文题目" autocomplete="off"></div>
+<button class='button' onclick="Search()" style="width:100px;height:40px;margin: 1px">检索</button></div>
+<div class="footer" style="color: #FFFFFF;">制作人：***,***,***,***,*** <div>如有疑问请联系：*************</div></div>
+  <script type="text/javascript" src="../static/jquery-3.3.1.js"></script>
+  <script >
+    function Search() {
+        $.ajax({
+            type:'get',
+            url: '/api/v0/assistant',
+            data:{
+              search_context: $("#search_context").val(),
+            },
+            dataType:'JSON',
+            success:function (data){},
+            error:function (data){}})
+    </script>
+</body>
+</html>
