@@ -1,6 +1,6 @@
 import EIpart as Ei
-import scholar.Web_of_knowledge as WoK
-import scholar.Google as Google
+import Web_of_knowledge as WoK
+import Google as Google
 import threading
 from queue import Queue
 

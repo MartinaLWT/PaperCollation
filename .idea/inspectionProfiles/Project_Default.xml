@@ -5,6 +5,8 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="EIpart" />
+          <option value="Web_of_knowledge" />
+          <option value="Google" />
         </list>
       </option>
     </inspection_tool>
