@@ -1,5 +1,5 @@
-import EIpart as ei
-import scholar.Web_of_knowledge as wok
+import EIpart as Ei
+import scholar.Web_of_knowledge as WoK
 import scholar.Google as Google
 import threading
 from queue import Queue
@@ -56,8 +56,8 @@ result_pool = []
 
 def spider_pool_run(url_1):
     essay_list = Google.get_info_from_google(url_1)
-    Max_pool1 = SpiderPool(wok.parse_webofknowledge, essay_list, call_back_result=result_pool)
-    Max_pool2 = SpiderPool(ei.get_ei_info, essay_list, call_back_result=result_pool)
+    Max_pool1 = SpiderPool(WoK.parse_webofknowledge, essay_list, call_back_result=result_pool)
+    Max_pool2 = SpiderPool(Ei.get_ei_info, essay_list, call_back_result=result_pool)
     Max_pool1.wait_all_run()
     Max_pool2.wait_all_run()
     print(result_pool)
