@@ -6,6 +6,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 import re
 
 browser = webdriver.Chrome()
+
+
 def get_ei_info(titles):
     paper_list = []
     for title in titles:
