@@ -6,7 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 import re
 
 browser = webdriver.Chrome()
-def sele_ei(titles):
+def get_ei_info(titles):
     paper_list = []
     for title in titles:
         wait = WebDriverWait(browser, 10)
