@@ -7,6 +7,8 @@
           <option value="EIpart" />
           <option value="Web_of_knowledge" />
           <option value="Google" />
+          <option value="scholar.EIpart.settings" />
+          <option value="settings" />
         </list>
       </option>
     </inspection_tool>

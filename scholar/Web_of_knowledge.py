@@ -6,9 +6,9 @@ import selenium
 from selenium import webdriver
 import re
 import scholar.settings as settings
-import scholar.Google as Google
+import Google as Google
 
-executable_path = settings.executable_path
+executable_path = "C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe"
 
 
 def get_html(url1):
