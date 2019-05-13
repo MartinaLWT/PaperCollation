@@ -53,5 +53,5 @@ def sele_ei(titles):
     print(paper_list)
 
 #传入姓名与论文title的列表进行ei上的爬取
-sele_ei(['Prediction of protein binding sites in protein structures using hidden Markov support vector machine',
-         'Clinical entity recognition using structural support vector machines with rich features'])
+#sele_ei(['Prediction of protein binding sites in protein structures using hidden Markov support vector machine',
+#         'Clinical entity recognition using structural support vector machines with rich features'])
