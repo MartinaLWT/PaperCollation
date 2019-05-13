@@ -1,4 +1,4 @@
-import scholar.EIpart as ei
+import EIpart as ei
 import scholar.Web_of_knowledge as wok
 import scholar.Google as Google
 import threading
@@ -61,4 +61,7 @@ def spider_pool_run(url_1):
     Max_pool1.wait_all_run()
     Max_pool2.wait_all_run()
     print(result_pool)
+
+
+spider_pool_run("https://scholar.google.com.hk/citations?hl=zh-CN&user=5oGXsxUAAAAJ")
 
