@@ -4,9 +4,9 @@ import time
 from lxml import etree
 import selenium
 from selenium import webdriver
+from scholar.settings import Settings
 import re
-import scholar.settings as settings
-import Google as Google
+
 
 executable_path = "C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe"
 
@@ -24,15 +24,15 @@ def get_html(url1):
         html_text = ""
     return html_text
 
-#
-# def parse_google_scholar(url1):
-#     essay_list = []
-#     html1 = get_html(url1)
-#     page = etree.HTML(html1)
-#     person_essay = page.xpath("//tr[@class='gsc_a_tr']/td[@class='gsc_a_t']/a")
-#     for essay in person_essay:
-#         essay_list.append(essay.xpath('./text()')[0])
-#     return essay_list
+
+def parse_google_scholar(url1):
+    essay_list = []
+    html1 = get_html(url1)
+    page = etree.HTML(html1)
+    person_essay = page.xpath("//tr[@class='gsc_a_tr']/td[@class='gsc_a_t']/a")
+    for essay in person_essay:
+        essay_list.append(essay.xpath('./text()')[0])
+    return essay_list
 
 
 def get_webgofknowledge_info(page, title):
@@ -78,11 +78,8 @@ def get_webgofknowledge_info(page, title):
 
 def parse_webofknowledge(essay_list):
     essay_info_list = []
-    chrome_options = webdriver.ChromeOptions()
-    pref = {"profile.managed_default_content_settings.images": 2}
-    chrome_options.add_experimental_option("prefs", pref)
-    browser = webdriver.Chrome(executable_path, chrome_options=chrome_options)
-    browser.implicitly_wait(10)
+    settings = Settings()
+    browser = settings.browser
     for essay in essay_list:
         browser.get("http://apps.webofknowledge.com/UA_GeneralSearch_input.do?locale=en_US&"
                     "product=UA&search_mode=GeneralSearch")
@@ -123,13 +120,13 @@ def parse_webofknowledge(essay_list):
     browser.close()
     return essay_info_list
 
-#
-# def get_info_from_google():
-#     url1 = "https://scholar.google.com.hk/citations?hl=zh-CN&user=5oGXsxUAAAAJ&pagesize=10000"
-#     lists = Google.parse_google_scholar(url1)
-    # essay_info_list = parse_webofknowledge(lists)
-    # for essay_info in essay_info_list:
-    #     print(essay_info)
+
+def get_info_from_google_and_web_of_knowledge():
+    url1 = "https://scholar.google.com.hk/citations?hl=zh-CN&user=5oGXsxUAAAAJ&pagesize=10000"
+    lists = parse_google_scholar(url1)
+    essay_info_list = parse_webofknowledge(lists)
+    for essay_info in essay_info_list:
+        print(essay_info)
     
 #
 # def main():

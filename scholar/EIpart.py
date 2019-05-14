@@ -3,17 +3,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from scholar.settings import Settings
 import re
 
 
-executable_path = "C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe"
-
-
-chrome_options = webdriver.ChromeOptions()
-pref = {"profile.managed_default_content_settings.images": 2}
-chrome_options.add_experimental_option("prefs", pref)
-browser = webdriver.Chrome(executable_path, chrome_options=chrome_options)
-browser.implicitly_wait(10)
+settings = Settings()
+browser = settings.browser
 
 
 def get_ei_info(titles):
