@@ -6,7 +6,7 @@ from queue import Queue
 
 class SpiderPool:
     # from multiprocessing import Pool
-    def __init__(self, func, args, thread_num=10, call_back_result=[]):
+    def __init__(self, func, args, thread_num=2, call_back_result={}):
         self.work_queue = Queue()
         self.result_queue = call_back_result
         self.threads = []
@@ -42,22 +42,22 @@ class PoolWork(threading.Thread):
             try:
                 do, args = self.work_queue.get(block=False)
                 # print(zip(args))
-                res = do(args[0][0], args[0][1])
+                res = do(args[0])
                 # print(do, get_url_by_image)
-                self.result_queue.append(res)
+                self.result_queue[res["title"]] = res
                 self.work_queue.task_done()
             except Exception:
                 break
 
 
-def get_info(url_1):
-    res = WoK.parse_webofknowledge(url_1)
-    if len(res) == 0:
-        res = Ei.get_ei_info(url_1)
-    return res
+# def get_info_summary(url_1):
+#     res = WoK.parse_webofknowledge(url_1)
+#     print(res)
+#     return res if not res.__contains__("tag") else Ei.get_ei_info(url_1)
 
 
-result_pool = []
+result_pool_1 = {}
+result_pool_2 = {}
 essay_list = ['Evaluating word representation features in biomedical named entity recognition tasks',
              'A hybrid system for temporal information extraction from clinical text',
              'The CHEMDNER corpus of chemicals and drugs and its annotation principles',
@@ -165,9 +165,23 @@ essay_list = ['Evaluating word representation features in biomedical named entit
 
 def spider_pool_run(url_1):
     # essay_list = Google.get_info_from_google(url_1)
+    # for essay in essay_list:
+        # print(WoK.parse_webofknowledge(essay))
+    # max_pool_1 = SpiderPool(WoK.parse_webofknowledge, essay_list, call_back_result=result_pool_1)
+    max_pool_2 = SpiderPool(Ei.get_ei_info, essay_list, call_back_result=result_pool_2)
 
-    max_pool = SpiderPool(get_info, essay_list, call_back_result=result_pool)
-    max_pool.wait_all_run()
+    # max_pool_1.wait_all_run()
+    max_pool_2.wait_all_run()
+
+    result_pool = {}
+    for essay in essay_list:
+        if result_pool_1.__contains__(essay) and not result_pool_1[essay].__contains__("tag"):
+            result_pool[essay] = result_pool_1[essay]
+        elif result_pool_1.__contains__(essay) and not result_pool_2[essay].__contains__("tag"):
+            result_pool[essay] = result_pool_2[essay]
+        else:
+            result_pool[essay] = "Not Found"
+
     print(result_pool)
 
 

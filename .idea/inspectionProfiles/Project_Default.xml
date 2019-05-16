@@ -9,6 +9,7 @@
           <option value="Google" />
           <option value="scholar.EIpart.settings" />
           <option value="settings" />
+          <option value="google_settings" />
         </list>
       </option>
     </inspection_tool>

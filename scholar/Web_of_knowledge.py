@@ -3,8 +3,7 @@ import requests
 import time
 from lxml import etree
 import selenium
-from selenium import webdriver
-from scholar.settings import Settings
+from scholar.google_settings import Settings
 import re
 
 
@@ -76,49 +75,47 @@ def get_webgofknowledge_info(page, title):
                                            "essay_type": essay_type}}
 
 
-def parse_webofknowledge(essay_list):
-    essay_info_list = []
+def parse_webofknowledge(essay):
     settings = Settings()
     browser = settings.browser
-    for essay in essay_list:
-        browser.get("http://apps.webofknowledge.com/UA_GeneralSearch_input.do?locale=en_US&"
-                    "product=UA&search_mode=GeneralSearch")
+    # for essay in essay_list:
+    browser.get("http://apps.webofknowledge.com/UA_GeneralSearch_input.do?locale=en_US&"
+                "product=UA&search_mode=GeneralSearch")
         # browser.get("http://apps.webofknowledge.com/UA_GeneralSearch_input.do?"
         #             "locale=en_US&errorKey=&errorKey=&product=UA&search_mode=GeneralSearch&viewType=input")
-        input_1 = browser.find_element_by_id("value(input1)")
-        input_1.clear()
-        input_1.send_keys(essay)
-        time.sleep(1)
-        browser.find_element_by_id("select2-select1-container").click()
-        input_2 = browser.find_elements_by_class_name("select2-search__field")[0]
-        input_2.clear()
-        input_2.send_keys("title\n")
-        time.sleep(5)
-        browser.find_element_by_class_name("button5").click()
-        time.sleep(1)
-        try:
-            hrefs = browser.find_elements_by_xpath("//a[@class='smallV110 snowplow-full-record']")
-            for href in hrefs:
-                if href.text == essay:
-                    href1 = href.get_attribute("href")
+    input_1 = browser.find_element_by_id("value(input1)")
+    input_1.clear()
+    input_1.send_keys(essay)
+    time.sleep(1)
+    browser.find_element_by_id("select2-select1-container").click()
+    input_2 = browser.find_elements_by_class_name("select2-search__field")[0]
+    input_2.clear()
+    input_2.send_keys("title\n")
+    time.sleep(5)
+    browser.find_element_by_class_name("button5").click()
+    time.sleep(1)
+    try:
+        hrefs = browser.find_elements_by_xpath("//a[@class='smallV110 snowplow-full-record']")
+        for href in hrefs:
+            if href.text == essay:
+                href1 = href.get_attribute("href")
             if not len(hrefs):
                 continue
-        except selenium.common.exceptions.NoSuchElementException:
-            essay_info_list.append({"title": essay, "tag": "not found"})
-            continue
-        cited_times = re.findall(r"\d+", browser.find_element_by_xpath(
+    except selenium.common.exceptions.NoSuchElementException:
+        return {"title": essay, "tag": "not found"}
+    cited_times = re.findall(r"\d+", browser.find_element_by_xpath(
             "//div[@class='search-results-data-cite']").text)[0]
         # except selenium.common.exceptions.NoSuchElementException:
         # cited_times = 0
-        try:
-            page = etree.HTML(get_html(href1))
-        except UnboundLocalError:
-            continue
-        essay_dict = get_webgofknowledge_info(page, essay)
-        essay_dict["Publication search details"]["cited_times"] = cited_times
-        essay_info_list.append(essay_dict)
+    try:
+        page = etree.HTML(get_html(href1))
+    except UnboundLocalError:
+        return {"title": essay, "tag": "not found"}
+    essay_dict = get_webgofknowledge_info(page, essay)
+    essay_dict["Publication search details"]["cited_times"] = cited_times
     browser.close()
-    return essay_info_list
+    # print(essay_dict)
+    return essay_dict
 
 
 def get_info_from_google_and_web_of_knowledge():
