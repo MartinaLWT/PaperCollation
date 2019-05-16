@@ -40,7 +40,7 @@ def get_webgofknowledge_info(page, title):
     # for name in names[1: -1]:
     #     print(name)
     #     names_list.append(name)
-    info_box = page.xpath("//div[@class='block-record-info block-record-info-source']")[0]
+    # info_box = page.xpath("//div[@class='block-record-info block-record-info-source']")[0]
     try:
         publication = page.xpath("//div[@class='block-record-info']/div[contains(text(), 'Publisher')]")[0]\
             .xpath("../p/value/text()")[0]

@@ -1,6 +1,7 @@
 import EIpart as Ei
 import Web_of_knowledge as WoK
 import threading
+import pickle
 from queue import Queue
 
 
@@ -48,6 +49,7 @@ class PoolWork(threading.Thread):
                 self.work_queue.task_done()
             except Exception:
                 break
+
 
 
 # def get_info_summary(url_1):
@@ -167,10 +169,10 @@ def spider_pool_run(url_1):
     # essay_list = Google.get_info_from_google(url_1)
     # for essay in essay_list:
         # print(WoK.parse_webofknowledge(essay))
-    # max_pool_1 = SpiderPool(WoK.parse_webofknowledge, essay_list, call_back_result=result_pool_1)
+    max_pool_1 = SpiderPool(WoK.parse_webofknowledge, essay_list, call_back_result=result_pool_1)
     max_pool_2 = SpiderPool(Ei.get_ei_info, essay_list, call_back_result=result_pool_2)
 
-    # max_pool_1.wait_all_run()
+    max_pool_1.wait_all_run()
     max_pool_2.wait_all_run()
 
     result_pool = {}
@@ -182,7 +184,10 @@ def spider_pool_run(url_1):
         else:
             result_pool[essay] = "Not Found"
 
-    print(result_pool)
+    # print(result_pool)
+    # with open("list.pk", "wb") as f:
+    #     pickle.dump(result_pool, f)
+    return result_pool
 
 
 spider_pool_run("https://scholar.google.com.hk/citations?hl=zh-CN&user=5oGXsxUAAAAJ")

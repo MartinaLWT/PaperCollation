@@ -4,11 +4,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 import re
+import time
 from scholar import google_settings
 
 
 def get_ei_info(title):
-    paper_list = []
+    time.sleep(5)
     setting_1 = google_settings.Settings()
     browser = setting_1.browser
     wait = WebDriverWait(browser, 20)
@@ -80,7 +81,7 @@ def get_ei_info(title):
             return details
     details["tag"] = "Not Found"
     browser.close()
-    return paper_list
+    return details
 
 get_ei_info('Prediction of protein binding sites in protein structures using hidden Markov support vector machine')
 #         'Clinical entity recognition using structural support vector machines with rich features')
