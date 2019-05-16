@@ -1,0 +1,2 @@
+调用即使用SpidersPool下的spider_pool_run函数即可，参数是google_scholar个人主页上的url
+然后可以直接使用注释掉的essay_list部分进行展示（代理池尚未设置）
